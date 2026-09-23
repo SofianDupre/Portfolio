@@ -92,19 +92,28 @@
   var lb = document.getElementById("lb");
   if (lb) {
     var lbImg = lb.querySelector("img"), lbCap = lb.querySelector(".cap");
-    document.querySelectorAll(".gal figure").forEach(function (fig) {
-      fig.addEventListener("click", function () {
-        var im = fig.querySelector("img"), cap = fig.querySelector("figcaption");
-        lbImg.removeAttribute("hidden"); lbImg.src = im.dataset.full || im.src;
-        lbCap.textContent = cap ? cap.textContent : "";
-        lb.classList.add("on");
-        document.body.style.overflow = "hidden";
-      });
+    document.addEventListener("click", function (ev) {
+      var t = ev.target;
+      var fig = t && t.closest ? t.closest(".gal figure, .mgal figure") : null;
+      if (!fig) return;
+      var im = fig.querySelector("img"), cap = fig.querySelector("figcaption");
+      if (!im) return;
+      lbImg.removeAttribute("hidden"); lbImg.src = im.dataset.full || im.src;
+      lbCap.textContent = cap ? cap.textContent : "";
+      lb.classList.add("on");
+      document.body.style.overflow = "hidden";
     });
-    function close() { lb.classList.remove("on"); document.body.style.overflow = ""; }
-    lb.addEventListener("click", close);
+    function close() {
+      lb.classList.remove("on");
+      var uem = document.getElementById("uem");
+      document.body.style.overflow = (uem && !uem.hidden) ? "hidden" : "";
+    }
+    lb.addEventListener("click", function (ev) { ev.stopPropagation(); close(); });
     document.addEventListener("keydown", function (ev) {
-      if (ev.key === "Escape") close();
+      if (ev.key === "Escape" && lb.classList.contains("on")) {
+        ev.stopImmediatePropagation();
+        close();
+      }
     });
   }
 
@@ -162,9 +171,14 @@
     });
   });
   modal.addEventListener("click", function (ev) {
+    var lb = document.getElementById("lb");
+    if (lb && lb.classList.contains("on")) return;
     if (ev.target === modal || ev.target.closest(".uem-x")) close();
   });
   document.addEventListener("keydown", function (ev) {
+    var lb = document.getElementById("lb");
+    // si la visionneuse est ouverte, Échap la ferme d'abord : la fiche reste
+    if (lb && lb.classList.contains("on")) return;
     if (ev.key === "Escape" && !modal.hidden) close();
   });
 })();

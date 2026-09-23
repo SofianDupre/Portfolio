@@ -371,6 +371,9 @@ footer li{margin-bottom:10px}
 .mgal figure{margin:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;
   background:#fff;transition:.28s}
 .mgal figure:hover{box-shadow:0 14px 36px rgba(18,58,99,.13);transform:translateY(-3px)}
+/* la visionneuse passe au-dessus de la modale des unités d’enseignement */
+#lb{z-index:1400}
+.gal figure,.mgal figure{cursor:zoom-in}
 .mgal img{width:100%;height:auto;display:block;background:#fff}
 .mgal figcaption{font-size:13px;color:var(--muted);padding:12px 16px 14px;line-height:1.5}
 .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:6px}
