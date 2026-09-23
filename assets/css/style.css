@@ -371,6 +371,9 @@ footer li{margin-bottom:10px}
 .mgal figure{margin:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;
   background:#fff;transition:.28s}
 .mgal figure:hover{box-shadow:0 14px 36px rgba(18,58,99,.13);transform:translateY(-3px)}
+/* accueil : photo réduite de 25 %, calée à droite de sa colonne */
+.hero-grid .portrait{width:75%;margin-left:auto}
+@media(max-width:900px){.hero-grid .portrait{width:75%;max-width:255px;margin:0}}
 /* la visionneuse passe au-dessus de la modale des unités d’enseignement */
 #lb{z-index:1400}
 .gal figure,.mgal figure{cursor:zoom-in}
